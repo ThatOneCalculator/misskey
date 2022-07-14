@@ -28,8 +28,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import * as misskey from 'misskey-js';
-import { Plyr } from 'plyr';
 import { defaultStore } from '@/store';
+const Plyr = require('plyr');
 
 
 const props = defineProps<{
