@@ -7,7 +7,7 @@
 	</div>
 	<div v-else-if="media.type.startsWith('audio') && media.type !== 'audio/midi'" class="audio">
 		<audio ref="audioEl"
-			class="audio"
+			class="audio plyr"
 			:src="media.url"
 			:title="media.name"
 			controls
@@ -28,11 +28,16 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue';
 import * as misskey from 'misskey-js';
+import { Plyr } from 'plyr';
 import { ColdDeviceStorage } from '@/store';
 
 const props = withDefaults(defineProps<{
 	media: misskey.entities.DriveFile;
 }>(), {
+});
+
+new Plyr('.plyr', {
+	settings: ['speed', 'loop'],
 });
 
 const audioEl = $ref<HTMLAudioElement | null>();
@@ -53,6 +58,13 @@ onMounted(() => {
 	border-radius: 4px;
 	margin-top: 4px;
 	overflow: hidden;
+
+	> .plyr {
+		--plyr-color-main: var(--accent);
+		--plyr-video-background: var(--bg);
+		--plyr-badge-text-color: var(--fg);
+		--plyr-badge-background: var(--accentedBg);
+	}
 
 	> .download,
 	> .sensitive {

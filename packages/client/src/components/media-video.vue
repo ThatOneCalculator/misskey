@@ -10,12 +10,14 @@
 		:poster="video.thumbnailUrl"
 		:title="video.comment"
 		:alt="video.comment"
+		class="plyr"
 		preload="none"
 		controls
+		playsinline
 		@contextmenu.stop
 	>
-		<source 
-			:src="video.url" 
+		<source
+			:src="video.url"
 			:type="video.type"
 		>
 	</video>
@@ -26,11 +28,18 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import * as misskey from 'misskey-js';
+import { Plyr } from 'plyr';
 import { defaultStore } from '@/store';
+
 
 const props = defineProps<{
 	video: misskey.entities.DriveFile;
 }>();
+
+new Plyr('.plyr', {
+	settings: ['speed', 'loop'],
+	title: props.video.comment,
+});
 
 const hide = ref((defaultStore.state.nsfw === 'force') ? true : props.video.isSensitive && (defaultStore.state.nsfw !== 'ignore'));
 </script>
@@ -38,6 +47,13 @@ const hide = ref((defaultStore.state.nsfw === 'force') ? true : props.video.isSe
 <style lang="scss" scoped>
 .kkjnbbplepmiyuadieoenjgutgcmtsvu {
 	position: relative;
+
+	> .plyr {
+		--plyr-color-main: var(--accent);
+		--plyr-video-background: var(--bg);
+		--plyr-badge-text-color: var(--fg);
+		--plyr-badge-background: var(--accentedBg);
+	}
 
 	> i {
 		display: block;
@@ -72,8 +88,8 @@ const hide = ref((defaultStore.state.nsfw === 'force') ? true : props.video.isSe
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: #111;
-	color: #fff;
+	/* background: #111;
+	color: #fff; */
 
 	> div {
 		display: table-cell;
