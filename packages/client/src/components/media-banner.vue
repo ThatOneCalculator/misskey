@@ -28,8 +28,8 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue';
 import * as misskey from 'misskey-js';
-import { Plyr } from 'plyr';
 import { ColdDeviceStorage } from '@/store';
+const Plyr = require('plyr');
 
 const props = withDefaults(defineProps<{
 	media: misskey.entities.DriveFile;
